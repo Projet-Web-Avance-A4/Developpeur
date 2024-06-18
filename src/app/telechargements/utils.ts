@@ -7,8 +7,8 @@ export const fetchDownloadableFiles = async () => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        if (Array.isArray(data.downloadableFiles)) {
-            return data.downloadableFiles;
+        if (Array.isArray(data.downloadableFolders)) {
+            return data.downloadableFolders;
         } else {
             throw new Error('Response data is not an array');
         }
