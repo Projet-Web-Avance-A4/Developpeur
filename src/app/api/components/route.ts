@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import archiver from 'archiver';
-import os from 'os';
+import os, { homedir } from 'os';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const foldername = searchParams.get('foldername');
   const listFiles = searchParams.get('listFiles');
-  const downloadPath = path.join(os.homedir(), 'Downloads');
+  const downloadPath = path.join(os.homedir());
 
   if (foldername) {
     const folderPath = path.join(process.cwd(), 'src/app/components', foldername);
@@ -27,9 +27,9 @@ export async function GET(req: NextRequest) {
       }
     } else {
       try {
-        const zipPath = path.join(downloadPath, `${foldername}.zip`);
+        const zipPath = path.join(downloadPath, `${foldername}.tar`);
         const output = fs.createWriteStream(zipPath);
-        const archive = archiver('zip', {
+        const archive = archiver('tar', {
           zlib: { level: 9 }
         });
 
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
           },
         });
       } catch (error) {
-        return new NextResponse(JSON.stringify({ error: 'Error creating zip file' }), {
+        return new NextResponse(JSON.stringify({ error: 'Error creating compressed file' }), {
           status: 500,
           headers: {
             'Content-Type': 'application/json',
