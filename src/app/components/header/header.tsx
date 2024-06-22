@@ -24,7 +24,7 @@ export default function Header() {
     return (
         <Navbar className="bg-red">
             <NavbarBrand>
-                <Link href={"/"}>
+                <Link href={"/téléchargements"}>
                     <p className="font-bold text-inherit ml-2 text-large flex items-center gap-2">
                         <Image
                             src={ceseat}
